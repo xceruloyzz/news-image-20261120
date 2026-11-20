@@ -1,7 +1,8 @@
 # The World Today: Friday 20 November 2026 in one image
 
-[![news-image-20261120 on make.fun](https://img.shields.io/badge/make.fun-news--image--20261120-blue)](https://make.fun/c/news-image-20261120)
-[![Friday 20 November 2026](https://img.shields.io/badge/date-20%20November%202026-black)](https://make.fun/c/news-image-20261120)
+[![make.fun · news-image-20261120](https://make.fun/badge/news-image-20261120.svg)](https://make.fun/bounty/news-image-20261120?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
+[![rank](https://make.fun/badge/news-image-20261120/xceruloyzz/news-image-20261120/rank.svg)](https://make.fun/bounty/news-image-20261120/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
+[![reward](https://make.fun/badge/news-image-20261120/xceruloyzz/news-image-20261120/reward.svg)](https://make.fun/bounty/news-image-20261120?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
 
 A newspaper front page that sums up Friday 20 November 2026 in a
 single 1024×1024 image. It was drawn in the early hours of the 20th,
