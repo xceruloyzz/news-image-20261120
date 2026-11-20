@@ -1,37 +1,47 @@
-#!/usr/bin/env python3
-"""Write the committed front page to the grading output directory.
+"""Copy the finished front page to the grading output folder.
 
-The picture lives next to this file as entry.png. This program only moves
-bytes around: it reads entry.png and writes an identical copy to wherever
-the grader expects it, preferring $MAKEFUN_OUTPUT_DIR, then /output when
-that directory exists, and finally ./out.
+The entry image lives in this repository as entry.png. This program
+does nothing but hand that file to the grader, in the place the
+grader looks for it:
+
+1. the directory named by MAKEFUN_OUTPUT_DIR, when that variable is set;
+2. /output, when that directory already exists;
+3. ./out, as a local fallback.
+
+It refuses to run if entry.png is missing, so a broken build fails
+loudly instead of submitting an empty output. Standard library only,
+no network, no clock, and the copy is byte for byte.
 """
+
 import os
 import shutil
+import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-IMAGE = HERE / "entry.png"
 
-
-def pick_destination() -> Path:
-    """Return the full path the copy should be written to."""
-    wanted = os.environ.get("MAKEFUN_OUTPUT_DIR")
+def choose_destination() -> Path:
+    """Pick the output folder using the priority listed above."""
+    wanted = os.environ.get("MAKEFUN_OUTPUT_DIR", "").strip()
     if wanted:
-        return Path(wanted) / "entry.png"
+        return Path(wanted)
     if Path("/output").is_dir():
-        return Path("/output") / "entry.png"
-    return Path("out") / "entry.png"
+        return Path("/output")
+    return Path("out")
 
 
-def main() -> None:
-    if not IMAGE.is_file():
-        raise SystemExit(f"missing {IMAGE}: render it first with tools/generate_frontpage.py")
-    dest = pick_destination()
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(IMAGE, dest)
-    print(f"entry.png ({dest.stat().st_size} bytes) -> {dest}")
+def main() -> int:
+    here = Path(__file__).resolve().parent
+    source = here / "entry.png"
+    if not source.is_file():
+        print("entry.png is missing from the repository root", file=sys.stderr)
+        return 1
+    destination_dir = choose_destination()
+    destination_dir.mkdir(parents=True, exist_ok=True)
+    destination = destination_dir / "entry.png"
+    shutil.copyfile(source, destination)
+    print(f"copied entry.png to {destination}")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
